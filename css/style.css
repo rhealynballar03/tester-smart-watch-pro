@@ -678,6 +678,77 @@ body::after {
 .callout.show { opacity: 1; transform: translateX(0); }
 
 /* ============================================================
+   TESTER TECH — homepage promo
+   ============================================================ */
+.tech-promo {
+  border-top: 1px solid var(--line-soft);
+}
+.tech-promo-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: center;
+}
+.tech-promo-text .section-title { margin: 1rem 0 1.6rem; }
+.tech-promo-text p {
+  color: var(--ink-dim);
+  max-width: 46ch;
+  font-size: 1.05rem;
+  margin-bottom: 2.4rem;
+}
+.tech-promo-media {
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, var(--bg-2), #000),
+    var(--bg-2);
+}
+.tech-promo-media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(120% 120% at 50% 50%, #000 30%, transparent 75%);
+}
+.tech-promo-media .glyph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 14vw, 11rem);
+  font-weight: 300;
+  color: var(--gold);
+  opacity: 0.16;
+  font-style: italic;
+}
+.tech-promo-media .corner {
+  position: absolute;
+  width: 14px; height: 14px;
+  border: 1px solid var(--gold);
+}
+.tech-promo-media .corner.tl { top: 12px; left: 12px; border-right: 0; border-bottom: 0; }
+.tech-promo-media .corner.tr { top: 12px; right: 12px; border-left: 0; border-bottom: 0; }
+.tech-promo-media .corner.bl { bottom: 12px; left: 12px; border-right: 0; border-top: 0; }
+.tech-promo-media .corner.br { bottom: 12px; right: 12px; border-left: 0; border-top: 0; }
+.tech-promo-media .tag {
+  position: absolute;
+  bottom: 14px; left: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ============================================================
    CTA
    ============================================================ */
 .cta {
@@ -797,6 +868,8 @@ body::after {
   .feature { grid-template-columns: 1fr; gap: 2.4rem; }
   .feature:nth-child(even) .feature-media { order: 0; }
   .feature-media { aspect-ratio: 16 / 10; }
+  .tech-promo-inner { grid-template-columns: 1fr; gap: 2.4rem; }
+  .tech-promo-media { aspect-ratio: 16 / 10; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); row-gap: 2.6rem; }
   .callout .line { width: 34px !important; }
   .callout { font-size: 0.58rem; }

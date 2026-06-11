@@ -5,3 +5,10 @@ md_extracted/
 # os cruft
 Thumbs.db
 .DS_Store
+
+# environment / secrets
+.env
+.env.*
+!.env.example
+
+.vercel
