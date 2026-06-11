@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tester Smart Watch Pro — Product</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: #1a1a1a;
+      background: #f5f5f7;
+      line-height: 1.5;
+    }
+    .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .product {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      background: #fff;
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .product__media {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+    }
+    .product__media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .product__title { font-size: 2rem; margin-bottom: 0.5rem; }
+    .product__price { font-size: 1.5rem; color: #6366f1; font-weight: 600; margin-bottom: 1rem; }
+    .product__desc { color: #555; margin-bottom: 1.5rem; }
+    .product__features { list-style: none; margin-bottom: 1.5rem; }
+    .product__features li { padding: 0.35rem 0; color: #444; }
+    .product__features li::before { content: "✓ "; color: #6366f1; font-weight: 700; }
+    .product__btn {
+      background: #6366f1;
+      color: #fff;
+      border: none;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .product__btn:hover { background: #4f46e5; }
+    .product__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+    .product__film {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.6rem;
+      border: 1px solid #d8b981;
+      border-radius: 8px;
+      color: #8a6d2f;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .product__film:hover { background: #d8b981; color: #1a1408; }
+    .product__film svg { width: 16px; height: 16px; }
+    .back { display: inline-block; margin-bottom: 1.5rem; color: #6366f1; text-decoration: none; }
+    .back:hover { text-decoration: underline; }
+    @media (max-width: 640px) {
+      .product { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="index.html">← Back to home</a>
+    <div class="product">
+      <div class="product__media">
+        <video controls autoplay muted loop playsinline poster="">
+          <source src="Smart%20Watch%20Dissection.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="product__info">
+        <h1 class="product__title">Tester Smart Watch Pro</h1>
+        <p class="product__price">$99.00</p>
+        <p class="product__desc">
+          A precision-engineered smart watch built to last. Watch the dissection
+          video to see the quality components inside — from the display module to
+          the battery and sensors.
+        </p>
+        <ul class="product__features">
+          <li>High-resolution always-on display</li>
+          <li>Heart-rate &amp; activity sensors</li>
+          <li>Multi-day battery life</li>
+          <li>Durable, repairable build</li>
+        </ul>
+        <div class="product__actions">
+          <button class="product__btn">Add to Cart</button>
+          <a class="product__film" href="anything.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4v16l13-8z"/></svg>
+            Watch Motion Study 001
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

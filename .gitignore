@@ -1,0 +1,7 @@
+# extracted skill docs / archives — not part of the site
+md_extracted/
+*.zip
+
+# os cruft
+Thumbs.db
+.DS_Store
