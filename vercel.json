@@ -2,6 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     { "source": "/submit", "destination": "/api/index" },
-    { "source": "/webhook/resend", "destination": "/api/index" }
+    { "source": "/webhook/resend", "destination": "/api/index" },
+    { "source": "/api/submissions", "destination": "/api/index" }
   ]
 }
