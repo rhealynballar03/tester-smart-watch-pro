@@ -47,6 +47,8 @@ const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KE
 const RESEND_WEBHOOK_SECRET = process.env.RESEND_WEBHOOK_SECRET || "";
 // Public base URL (used in email links). Set this to your live domain on Vercel.
 const SITE_URL = process.env.SITE_URL || "http://localhost:3000";
+// Password that protects the submissions dashboard (/dashboard.html).
+const DASHBOARD_PASSWORD = process.env.DASHBOARD_PASSWORD || "";
 
 // --- middleware -------------------------------------------------
 app.use(cors());                                   // allow cross-origin (harmless even same-origin)
@@ -234,6 +236,29 @@ app.post("/submit", async (req, res) => {
       "Sorry — we couldn't save your submission. Check the server terminal for details."
     );
   }
+});
+
+// Dashboard data API. The dashboard page posts the password here; if it
+// matches, we return all submissions for display. Kept server-side so the
+// password and the Supabase key never reach the browser.
+app.post("/api/submissions", async (req, res) => {
+  if (!DASHBOARD_PASSWORD) {
+    return res.status(500).json({ error: "Dashboard password is not configured on the server." });
+  }
+  if ((req.body.password || "") !== DASHBOARD_PASSWORD) {
+    return res.status(401).json({ error: "Incorrect password." });
+  }
+  if (!supabase) {
+    return res.status(500).json({ error: "Supabase is not configured." });
+  }
+
+  const { data, error } = await supabase
+    .from(SUPABASE_TABLE)
+    .select("name, email, message, reply_status, newsletter_subscribed, followup_stage, created_at")
+    .order("created_at", { ascending: false });
+
+  if (error) return res.status(500).json({ error: error.message });
+  res.json({ count: data.length, submissions: data });
 });
 
 // Resend posts here for EVERY email event: outbound lifecycle
