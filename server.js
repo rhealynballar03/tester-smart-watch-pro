@@ -45,6 +45,8 @@ const RESEND_REPLY_TO = process.env.RESEND_REPLY_TO || "";
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 // Secret from Resend's webhook settings — used to verify inbound events are genuine.
 const RESEND_WEBHOOK_SECRET = process.env.RESEND_WEBHOOK_SECRET || "";
+// Public base URL (used in email links). Set this to your live domain on Vercel.
+const SITE_URL = process.env.SITE_URL || "http://localhost:3000";
 
 // --- middleware -------------------------------------------------
 app.use(cors());                                   // allow cross-origin (harmless even same-origin)
@@ -54,12 +56,20 @@ app.use(express.json({ verify: (req, _res, buf) => { req.rawBody = buf; } }));
 app.use(express.static(__dirname));                // serve index.html, css, js, etc.
 
 // --- Google Sheets auth ----------------------------------------
-// Uses the service-account key file (credentials.json) you downloaded
-// from Google Cloud. The sheet must be SHARED with that account's email.
-const auth = new google.auth.GoogleAuth({
-  keyFile: path.join(__dirname, "credentials.json"),
-  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-});
+// Locally we read the service-account key file (credentials.json). On a host
+// like Vercel there is no file, so we fall back to GOOGLE_CREDENTIALS_JSON
+// (the entire key file pasted into an env var). The sheet must be SHARED with
+// the service account's email either way.
+const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
+const auth = process.env.GOOGLE_CREDENTIALS_JSON
+  ? new google.auth.GoogleAuth({
+      credentials: JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON),
+      scopes: SCOPES,
+    })
+  : new google.auth.GoogleAuth({
+      keyFile: path.join(__dirname, "credentials.json"),
+      scopes: SCOPES,
+    });
 
 async function appendToSheet({ name, email, message }) {
   if (!SHEET_ID) {
@@ -115,7 +125,7 @@ async function sendWelcomeEmail({ name, email }) {
         Just hit <em>reply</em> to this email and tell us what drew you in, or ask us
         anything — we read and answer every reply.
       </p>
-      <a href="http://localhost:3000/product.html"
+      <a href="${SITE_URL}/product.html"
          style="display:inline-block;font-size:13px;letter-spacing:2px;text-transform:uppercase;
                 color:#d8b981;text-decoration:none;border:1px solid #d8b981;border-radius:3px;
                 padding:14px 28px;">
@@ -289,7 +299,13 @@ app.post("/webhook/resend", async (req, res) => {
   console.log(`🗂️  Logged ${type} for ${contactEmail}`);
 });
 
-app.listen(PORT, () => {
-  console.log(`\n✅ Server running → http://localhost:${PORT}`);
-  console.log(`   Open that address, scroll under the hero, and submit the form.\n`);
-});
+// Run a real server only when started directly (local dev). On Vercel the app
+// is imported by api/index.js and invoked per-request, so we must NOT listen.
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`\n✅ Server running → http://localhost:${PORT}`);
+    console.log(`   Open that address, scroll under the hero, and submit the form.\n`);
+  });
+}
+
+module.exports = app;

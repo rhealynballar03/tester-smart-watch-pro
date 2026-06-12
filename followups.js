@@ -18,6 +18,7 @@ const TABLE = process.env.SUPABASE_TABLE || "form_submissions";
 const FROM = process.env.RESEND_FROM || "Tester Laboratories <onboarding@resend.dev>";
 const REPLY_TO = process.env.RESEND_REPLY_TO || undefined;
 const INTERVAL_DAYS = Number(process.env.FOLLOWUP_INTERVAL_DAYS || 5);
+const SITE_URL = process.env.SITE_URL || "http://localhost:3000";
 const ONLY_SUBSCRIBERS = String(process.env.FOLLOWUP_ONLY_SUBSCRIBERS || "false") === "true";
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY, {
@@ -34,7 +35,7 @@ function shell(inner) {
         Tester Laboratories
       </p>
       ${inner}
-      <a href="http://localhost:3000/product.html"
+      <a href="${SITE_URL}/product.html"
          style="display:inline-block;margin-top:8px;font-size:13px;letter-spacing:2px;text-transform:uppercase;
                 color:#d8b981;text-decoration:none;border:1px solid #d8b981;border-radius:3px;padding:14px 28px;">
         Explore the watch →

@@ -1,0 +1,9 @@
+# Never upload secrets — Vercel uses the configured Environment Variables.
+.env
+.env.*
+!.env.example
+credentials.json
+
+# Local-only tooling
+*.log
+md_extracted/
