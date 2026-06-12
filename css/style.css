@@ -351,6 +351,15 @@ body::after {
 @keyframes fadeUp {
   to { opacity: 1; transform: translateY(0); }
 }
+.hero-actions {
+  margin-top: clamp(1.8rem, 4vh, 2.6rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 1s var(--ease) 1.35s forwards;
+}
 
 /* ============================================================
    MARQUEE
@@ -887,6 +896,6 @@ body::after {
   * { animation: none !important; transition: none !important; }
   .reveal { opacity: 1 !important; transform: none !important; clip-path: none !important; }
   .hero-heading .word > span { transform: none; opacity: 1; }
-  .hero-tagline, .scroll-cue { opacity: 1; transform: none; }
+  .hero-tagline, .scroll-cue, .hero-actions { opacity: 1; transform: none; }
   .marquee-track { animation: none; }
 }
