@@ -4,7 +4,12 @@
   "description": "Landing page with a contact form that saves submissions to Google Sheets.",
   "type": "commonjs",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "followups": "node followups.js",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.1",
@@ -15,5 +20,8 @@
     "pg": "^8.21.0",
     "resend": "^6.12.4",
     "svix": "^1.95.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0"
   }
 }
