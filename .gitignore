@@ -10,5 +10,9 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+credentials.json
+
+# node
+node_modules/
 
 .vercel
