@@ -78,6 +78,8 @@
     }
     .tt-logo .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 12px var(--gold); }
     .tt-logo span.t2 { color: var(--gold); }
+    .tt-logo__home { width: 18px; height: 18px; color: var(--gold); flex: none; filter: drop-shadow(0 0 6px rgba(216,185,129,.5)); transition: transform .3s var(--ease); }
+    .tt-logo:hover .tt-logo__home { transform: translateY(-1px) scale(1.08); }
 
     .tt-links { display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2.2rem); }
     .tt-link {
@@ -505,7 +507,7 @@
   <header class="tt-nav" id="top">
     <div class="tt-nav__inner">
       <a class="tt-logo" href="index.html" aria-label="Tester Tech — back to home">
-        <span class="dot" aria-hidden="true"></span> TESTER<span class="t2">TECH</span>
+        <svg class="tt-logo__home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9"/></svg> TESTER<span class="t2">TECH</span>
       </a>
 
       <nav class="tt-links" aria-label="Primary">
@@ -1493,7 +1495,7 @@
     <div class="tt-wrap">
       <div class="tt-footer__top">
         <div class="tt-footer__brand">
-          <a class="tt-logo" href="index.html" aria-label="Tester Tech — back to home"><span class="dot" aria-hidden="true"></span> TESTER<span class="t2">TECH</span></a>
+          <a class="tt-logo" href="index.html" aria-label="Tester Tech — back to home"><svg class="tt-logo__home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9"/></svg> TESTER<span class="t2">TECH</span></a>
           <p>Premium consumer technology, engineered to the micron and built to be inherited, not replaced.</p>
           <div class="tt-socials">
             <a href="#" aria-label="Tester Tech on X / Twitter"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-7.3L6 22H2.9l7.5-8.6L2.5 2h6.6l4.5 6.6L18.9 2zm-1.1 18h1.7L7.3 3.8H5.5L17.8 20z"/></svg></a>
