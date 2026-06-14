@@ -47,7 +47,35 @@
       transition: background 0.2s;
     }
     .product__btn:hover { background: #4f46e5; }
+    .product__btn:active { transform: translateY(1px); }
     .product__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+
+    /* top bar: back link + cart indicator */
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+    .topbar .back { margin-bottom: 0; }
+    .cart-pill {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 0.9rem; border: 1px solid #e2e2ea; border-radius: 999px;
+      background: #fff; color: #1a1a1a; font-size: 0.9rem; text-decoration: none;
+    }
+    .cart-pill svg { width: 18px; height: 18px; }
+    .cart-pill__count {
+      display: none; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px;
+      background: #6366f1; color: #fff; font-size: 0.72rem; font-weight: 700;
+      align-items: center; justify-content: center; line-height: 1;
+    }
+    .cart-pill__count.show { display: inline-flex; }
+
+    /* confirmation toast */
+    .toast {
+      position: fixed; left: 50%; bottom: 1.75rem; transform: translateX(-50%) translateY(160%);
+      display: flex; align-items: center; gap: 0.6rem;
+      background: #1a1a1a; color: #fff; padding: 0.8rem 1.15rem; border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2); font-size: 0.92rem; z-index: 50;
+      opacity: 0; transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), opacity 0.4s;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .toast svg { width: 18px; height: 18px; color: #6ee7a0; flex: none; }
     .product__film {
       display: inline-flex;
       align-items: center;
@@ -71,7 +99,14 @@
 </head>
 <body>
   <div class="container">
-    <a class="back" href="index.html">← Back to home</a>
+    <div class="topbar">
+      <a class="back" href="index.html">← Back to home</a>
+      <a class="cart-pill" href="#" id="cartPill" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.4a1.5 1.5 0 0 0 1.5 1.2h8.2a1.5 1.5 0 0 0 1.5-1.2L21 7H6"/></svg>
+        Cart
+        <span class="cart-pill__count" id="cartCount" aria-live="polite">0</span>
+      </a>
+    </div>
     <div class="product">
       <div class="product__media">
         <video controls autoplay muted loop playsinline poster="">
@@ -94,7 +129,8 @@
           <li>Durable, repairable build</li>
         </ul>
         <div class="product__actions">
-          <button class="product__btn">Add to Cart</button>
+          <button class="product__btn" id="addToCart"
+                  data-name="Tester Smart Watch Pro" data-price="99.00">Add to Cart</button>
           <a class="product__film" href="anything.html">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4v16l13-8z"/></svg>
             Watch Motion Study 001
@@ -103,5 +139,62 @@
       </div>
     </div>
   </div>
+
+  <!-- confirmation toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+    <span id="toastMsg">Added to cart</span>
+  </div>
+
+  <!-- minimal cart: persists a line-item list in localStorage -->
+  <script>
+    (function () {
+      "use strict";
+      var KEY = "tester_cart";
+      var btn = document.getElementById("addToCart");
+      var countEl = document.getElementById("cartCount");
+      var toast = document.getElementById("toast");
+      var toastMsg = document.getElementById("toastMsg");
+      var toastTimer;
+
+      function readCart() {
+        try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+        catch (e) { return []; }
+      }
+      function writeCart(items) {
+        try { localStorage.setItem(KEY, JSON.stringify(items)); } catch (e) {}
+      }
+      function totalQty(items) {
+        return items.reduce(function (n, it) { return n + (it.qty || 0); }, 0);
+      }
+      function renderCount() {
+        var qty = totalQty(readCart());
+        countEl.textContent = String(qty);
+        countEl.classList.toggle("show", qty > 0);
+      }
+      function showToast(msg) {
+        toastMsg.textContent = msg;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 2400);
+      }
+
+      renderCount();
+
+      if (btn) {
+        btn.addEventListener("click", function () {
+          var name = btn.getAttribute("data-name") || "Item";
+          var price = parseFloat(btn.getAttribute("data-price")) || 0;
+          var items = readCart();
+          var line = items.filter(function (it) { return it.name === name; })[0];
+          if (line) { line.qty += 1; }
+          else { items.push({ name: name, price: price, qty: 1 }); }
+          writeCart(items);
+          renderCount();
+          showToast("Added to cart — " + name);
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
