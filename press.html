@@ -14,6 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,500&family=Familjen+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/cart.css" />
 
   <style>
     :root { --tt-panel:#0c0c0c; --tt-panel-2:#121110; --tt-radius:16px; --tt-radius-sm:11px; --shadow:0 24px 60px -28px rgba(0,0,0,.9); --ship:#5fd0a8; }
@@ -104,6 +105,8 @@
     .tt-fcol a[aria-current="page"] { color: var(--gold); }
     .tt-footer__bottom { margin-top: 2.6rem; padding-top: 1.6rem; border-top: 1px solid var(--line-soft); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; font-family: var(--font-mono); font-size: .64rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
     .tt-pay { display: flex; gap: .6rem; } .tt-pay span { border: 1px solid var(--line); border-radius: 4px; padding: .3rem .55rem; }
+    .tt-footer__legal { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+    .tt-footer__legal a { color: var(--muted); transition: color .3s; } .tt-footer__legal a:hover { color: var(--gold); }
 
     @media (max-width: 1000px) { .tt-footer__top { grid-template-columns: 1fr 1fr; gap: 2rem; } .tt-footer__brand { grid-column: 1 / -1; } }
     @media (max-width: 760px) { .tt-links { display: none; } .pg-item { grid-template-columns: 1fr; gap: .6rem; } .pg-item__tag { justify-self: start; } }
@@ -287,6 +290,9 @@
       </div>
       <div class="tt-footer__bottom">
         <span>© 2026 Tester Tech — A Tester Laboratories brand</span>
+        <div class="tt-footer__legal">
+          <a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="returns.html">Returns</a>
+        </div>
         <div class="tt-pay"><span>Visa</span><span>Mastercard</span><span>Amex</span><span>Apple Pay</span></div>
       </div>
     </div>
@@ -318,5 +324,7 @@
       }
     })();
   </script>
+  <script src="js/catalog.js"></script>
+  <script src="js/cart.js"></script>
 </body>
 </html>

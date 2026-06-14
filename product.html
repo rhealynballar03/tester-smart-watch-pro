@@ -101,7 +101,7 @@
   <div class="container">
     <div class="topbar">
       <a class="back" href="index.html">← Back to home</a>
-      <a class="cart-pill" href="#" id="cartPill" aria-label="Cart">
+      <a class="cart-pill" href="cart.html" id="cartPill" aria-label="View cart">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.4a1.5 1.5 0 0 0 1.5 1.2h8.2a1.5 1.5 0 0 0 1.5-1.2L21 7H6"/></svg>
         Cart
         <span class="cart-pill__count" id="cartCount" aria-live="polite">0</span>
@@ -130,7 +130,7 @@
         </ul>
         <div class="product__actions">
           <button class="product__btn" id="addToCart"
-                  data-name="Tester Smart Watch Pro" data-price="99.00">Add to Cart</button>
+                  data-id="smart-watch-pro" data-name="Tester Smart Watch Pro" data-price="99.00">Add to Cart</button>
           <a class="product__film" href="anything.html">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4v16l13-8z"/></svg>
             Watch Motion Study 001
@@ -185,10 +185,11 @@
         btn.addEventListener("click", function () {
           var name = btn.getAttribute("data-name") || "Item";
           var price = parseFloat(btn.getAttribute("data-price")) || 0;
+          var id = btn.getAttribute("data-id") || "smart-watch-pro";
           var items = readCart();
-          var line = items.filter(function (it) { return it.name === name; })[0];
+          var line = items.filter(function (it) { return it.id === id; })[0];
           if (line) { line.qty += 1; }
-          else { items.push({ name: name, price: price, qty: 1 }); }
+          else { items.push({ id: id, name: name, price: price, qty: 1 }); }
           writeCart(items);
           renderCount();
           showToast("Added to cart — " + name);

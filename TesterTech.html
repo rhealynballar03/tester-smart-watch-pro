@@ -24,6 +24,8 @@
 
   <!-- shared design tokens, resets, fonts, atmospheric layers -->
   <link rel="stylesheet" href="css/style.css" />
+  <!-- shared cart UI: header cart button, slide-in drawer, toast -->
+  <link rel="stylesheet" href="css/cart.css" />
 
   <!-- ============================================================
        PAGE-SPECIFIC STOREFRONT STYLES (built on shared tokens)
@@ -336,6 +338,9 @@
     }
     .tt-pay { display: flex; gap: .6rem; }
     .tt-pay span { border: 1px solid var(--line); border-radius: 4px; padding: .3rem .55rem; }
+    .tt-footer__legal { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+    .tt-footer__legal a { color: var(--muted); transition: color .3s; }
+    .tt-footer__legal a:hover { color: var(--gold); }
 
     /* ---------- PRODUCT SPOTLIGHT ---------- */
     .tt-spot__inner { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; }
@@ -710,7 +715,7 @@
           </div>
 
           <div class="tt-hero__actions tt-reveal" data-delay="4" style="margin-top:2.2rem;">
-            <button class="tt-btn tt-btn--lg" data-add="Spectra Glasses" data-price="$499">
+            <button class="tt-btn tt-btn--lg" data-add="Spectra" data-price="$499">
               Add to cart — $499
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
@@ -858,7 +863,7 @@
               <div class="tt-rating"><span class="stars" aria-hidden="true">★★★★★</span> 4.8 (612)</div>
               <div class="tt-card__foot">
                 <div class="tt-price">$499</div>
-                <button class="tt-card__btn" data-add="Spectra Glasses" data-price="$499">Add to Cart</button>
+                <button class="tt-card__btn" data-add="Spectra" data-price="$499">Add to Cart</button>
               </div>
             </div>
           </article>
@@ -1520,22 +1525,23 @@
           <a href="careers.html">Careers</a>
           <a href="press.html">Press</a>
           <a href="sustainability.html">Sustainability</a>
-          <a href="index.html">Smart Watch Pro</a>
         </div>
 
         <div class="tt-fcol">
-          <h4>Get in touch</h4>
-          <address>
-            <span>hello@testertech.com</span>
-            <span>+1 (800) 555-0142</span>
-            <span>140 Micron Way, San Francisco, CA</span>
-            <span>Mon–Fri · 9am–6pm PT</span>
-          </address>
+          <h4>Support</h4>
+          <a href="returns.html">Returns &amp; Refunds</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="cart.html">Your cart</a>
+          <a href="mailto:hello@testertech.com">hello@testertech.com</a>
         </div>
       </div>
 
       <div class="tt-footer__bottom">
         <span>© 2026 Tester Tech — A Tester Laboratories brand</span>
+        <div class="tt-footer__legal">
+          <a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="returns.html">Returns</a>
+        </div>
         <div class="tt-pay">
           <span>Visa</span><span>Mastercard</span><span>Amex</span><span>Apple Pay</span>
         </div>
@@ -1611,20 +1617,8 @@
         toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 2600);
       }
 
-      /* ---------- add to cart ---------- */
-      var cart = 0;
-      var cartCount = document.getElementById("ttCartCount");
-      document.addEventListener("click", function (e) {
-        var btn = e.target.closest("[data-add], .tt-card__btn");
-        if (!btn) return;
-        var label = btn.getAttribute("data-add");
-        var name = label || (btn.closest(".tt-card") && btn.closest(".tt-card").querySelector(".tt-card__name").textContent) || "item";
-        var txt = btn.textContent.trim().toLowerCase();
-        if (txt.indexOf("explore") === 0) { showToast("Opening " + name + " …"); return; }
-        cart++;
-        if (cartCount) { cartCount.textContent = String(cart); cartCount.classList.add("show"); }
-        showToast("Added " + name + " to cart");
-      });
+      /* add-to-cart, Buy Now / Explore navigation and the cart drawer are
+         handled by the shared cart engine (js/cart.js). */
 
       /* ---------- wishlist toggle ---------- */
       document.addEventListener("click", function (e) {
@@ -1691,5 +1685,9 @@
       }
     })();
   </script>
+
+  <!-- shared product catalog + cart engine (persistent header cart, drawer, checkout) -->
+  <script src="js/catalog.js"></script>
+  <script src="js/cart.js"></script>
 </body>
 </html>
